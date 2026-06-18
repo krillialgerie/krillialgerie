@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Krilli × Yinvesti Levée de Fonds</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #E73B1E;
+      --red-dark: #c22e14;
+      --red-light: rgba(231,59,30,0.08);
+      --red-border: rgba(231,59,30,0.2);
+      --black: #0F0F0F;
+      --text: #1a1a1a;
+      --text-muted: #6b7280;
+      --text-light: #9ca3af;
+      --bg: #ffffff;
+      --bg-soft: #fafafa;
+      --bg-warm: #fff8f6;
+      --border: #e5e7eb;
+      --border-dark: #d1d5db;
+      --font-display: 'Inter', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+      --shadow-lg: 0 20px 60px rgba(0,0,0,0.1), 0 8px 20px rgba(0,0,0,0.06);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 5%;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 14px; }
+    .nav-logo svg { height: 28px; }
+    .nav-badge {
+      font-family: var(--font-display);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--red);
+      border: 1px solid var(--red-border);
+      background: var(--red-light);
+      padding: 3px 9px; border-radius: 2px;
+    }
+    .nav-cta {
+      background: var(--red); color: #fff;
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 13px; letter-spacing: 0.04em;
+      padding: 10px 22px; border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+    /* ── HERO (split: pitch + form) ──────── */
+    .hero {
+      min-height: 100vh;
+      padding: 110px 5% 80px;
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 72px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    /* orange top-left accent bar */
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: linear-gradient(180deg, var(--red) 0%, transparent 100%);
+    }
+    /* subtle warm tint on right */
+    .hero::after {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 50%; height: 100%;
+      background: var(--bg-warm);
+      z-index: -1;
+    }
+
+    .hero-left { position: relative; }
+    .hero-eyebrow {
+      font-family: var(--font-display);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--red);
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 28px;
+      opacity: 0; animation: fadeUp 0.7s 0.1s forwards;
+    }
+    .hero-eyebrow::before {
+      display: none;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--black);
+      margin-bottom: 26px;
+      opacity: 0; animation: fadeUp 0.7s 0.25s forwards;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--red);
+    }
+    .hero h1 .underline-accent {
+      position: relative; display: inline-block;
+    }
+    .hero h1 .underline-accent::after {
+      display: none;
+    }
+    .hero-sub {
+      font-size: 16px; font-weight: 300;
+      color: var(--text-muted);
+      max-width: 520px; line-height: 1.8;
+      margin-bottom: 44px;
+      opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+    }
+    .hero-sub a { color: var(--red); text-decoration: underline; text-underline-offset: 3px; }
+    .hero-sub strong { color: var(--text); font-weight: 500; }
+
+    .hero-stats {
+      display: flex; gap: 40px; flex-wrap: wrap;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+      opacity: 0; animation: fadeUp 0.7s 0.55s forwards;
+    }
+    .stat-item { display: flex; flex-direction: column; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem; font-weight: 800;
+      color: var(--black); line-height: 1;
+    }
+    .stat-num span { color: var(--red); }
+    .stat-label {
+      font-size: 11px; font-weight: 400;
+      color: var(--text-light); letter-spacing: 0.04em;
+      margin-top: 5px;
+      text-transform: uppercase;
+    }
+
+    .hero-trust {
+      display: flex; align-items: center; gap: 12px;
+      opacity: 0; animation: fadeUp 0.7s 0.7s forwards;
+    }
+    .trust-badge {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 500; color: var(--text-muted);
+    }
+    .trust-badge svg { flex-shrink: 0; color: var(--red); }
+    .trust-sep { color: var(--border-dark); font-size: 18px; }
+
+    /* ── FORM CARD (hero right) ──────────── */
+    .hero-right {
+      opacity: 0; animation: fadeUp 0.7s 0.3s forwards;
+    }
+    .form-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 44px 40px;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    .form-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--red);
+      border-radius: 12px 12px 0 0;
+    }
+    .form-card-label {
+      font-family: var(--font-display);
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 10px;
+    }
+    .form-card-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem; font-weight: 800;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+    .form-card-sub {
+      font-size: 13px; color: var(--text-light);
+      margin-bottom: 28px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { margin-bottom: 16px; }
+    label {
+      display: block;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: var(--font-body); font-size: 14.5px;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      appearance: none;
+    }
+    input::placeholder, textarea::placeholder { color: var(--text-light); }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--red);
+      background: var(--bg-warm);
+      box-shadow: 0 0 0 3px rgba(231,59,30,0.1);
+    }
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 12px center;
+    }
+    textarea { resize: vertical; min-height: 80px; }
+    .form-divider { height: 1px; background: var(--border); margin: 22px 0; }
+    .submit-btn {
+      width: 100%;
+      background: var(--red); color: #fff;
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 15px; letter-spacing: 0.04em;
+      padding: 15px; border: none; border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      margin-top: 4px;
+    }
+    .submit-btn:hover {
+      background: var(--red-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(231,59,30,0.3);
+    }
+    .form-note {
+      text-align: center; font-size: 11.5px; color: var(--text-light);
+      margin-top: 12px; line-height: 1.5;
+    }
+    .success-msg { display: none; text-align: center; padding: 32px 0; }
+    .success-icon {
+      width: 56px; height: 56px;
+      background: var(--red-light);
+      border: 2px solid var(--red);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .success-msg h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--black); margin-bottom: 8px; }
+    .success-msg p { font-size: 14px; color: var(--text-muted); }
+
+    /* ── YINVESTI STRIP ──────────────────── */
+    .yinvesti-strip {
+      background: var(--bg-soft);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px; flex-wrap: wrap;
+    }
+    .yinvesti-logos {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .yinvesti-logos svg.krilli-inline { height: 24px; }
+    .yinvesti-sep {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 1rem; color: var(--border-dark);
+    }
+    .yinvesti-logo-svg { height: 26px; }
+    .yinvesti-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--text-light);
+      margin-bottom: 5px;
+    }
+    .yinvesti-desc {
+      font-size: 14.5px; color: var(--text-muted); max-width: 560px; line-height: 1.7;
+    }
+
+    /* ── SECTIONS ────────────────────────── */
+    .section { padding: 96px 5%; }
+    .section-alt { background: var(--bg-soft); }
+    .section-tag {
+      font-family: var(--font-display);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--red);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 14px;
+    }
+    .section-sub {
+      font-size: 16px; font-weight: 300;
+      color: var(--text-muted);
+      max-width: 560px; line-height: 1.75;
+    }
+
+    /* ── OPPORTUNITY GRID ────────────────── */
+    .opportunity-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .opp-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 36px 32px;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+    .opp-card:hover {
+      border-color: var(--red-border);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .opp-icon {
+      width: 44px; height: 44px;
+      background: var(--red-light);
+      border: 1px solid var(--red-border);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      color: var(--red);
+    }
+    .opp-card h3 {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 700;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+    .opp-card p {
+      font-size: 14px; font-weight: 300;
+      color: var(--text-muted); line-height: 1.75;
+    }
+
+    /* ── BOTTOM CTA STRIP ────────────────── */
+    .cta-strip {
+      background: var(--black);
+      padding: 80px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 32px; flex-wrap: wrap;
+    }
+    .cta-strip-left { max-width: 560px; }
+    .cta-strip-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800; color: #fff;
+      line-height: 1.1; margin-bottom: 12px;
+    }
+    .cta-strip-title em { color: var(--red); font-style: normal; }
+    .cta-strip-sub { font-size: 15px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+    .cta-strip a {
+      display: inline-block;
+      background: var(--red); color: #fff;
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 15px; letter-spacing: 0.04em;
+      padding: 16px 38px; border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+    .cta-strip a:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+    /* ── FOOTER ──────────────────────────── */
+    footer {
+      padding: 36px 5%;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .footer-left svg { height: 20px; opacity: 0.5; }
+    .footer-copy { font-size: 13px; color: var(--text-light); }
+    .footer-right { font-size: 12px; color: var(--text-light); }
+    .footer-right a { color: var(--red); text-decoration: none; }
+
+    /* ── ANIMATIONS ──────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── DIVIDER ─────────────────────────── */
+    .divider {
+      width: 100%; height: 1px;
+      background: var(--border);
+    }
+
+    /* ── LANG SWITCHER ───────────────────── */
+    .lang-switcher {
+      display: flex; align-items: center;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-right: 16px;
+      flex-shrink: 0;
+    }
+    .lang-btn {
+      padding: 7px 14px;
+      font-family: var(--font-display);
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.06em;
+      border: none; background: transparent;
+      cursor: pointer; color: var(--text-muted);
+      transition: background 0.2s, color 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--red); color: #fff;
+    }
+    .lang-btn:not(.active):hover {
+      background: var(--red-light); color: var(--red);
+    }
+
+    /* ── RTL SUPPORT ────────────────────── */
+    [dir="rtl"] body { font-family: 'Segoe UI', 'Cairo', 'Tahoma', var(--font-body), sans-serif; }
+    [dir="rtl"] nav { flex-direction: row-reverse; }
+    [dir="rtl"] .nav-logo { flex-direction: row-reverse; }
+    [dir="rtl"] .hero { direction: rtl; }
+    [dir="rtl"] .hero::before { left: auto; right: 0; }
+    [dir="rtl"] .hero::after { left: 0; right: auto; }
+    [dir="rtl"] .hero-eyebrow { flex-direction: row-reverse; }
+    [dir="rtl"] .hero-stats { flex-direction: row-reverse; }
+    [dir="rtl"] .hero-trust { flex-direction: row-reverse; }
+    [dir="rtl"] .trust-badge { flex-direction: row-reverse; }
+    [dir="rtl"] .form-row { direction: rtl; }
+    [dir="rtl"] label { text-align: right; }
+    [dir="rtl"] input, [dir="rtl"] select, [dir="rtl"] textarea { text-align: right; direction: rtl; }
+    [dir="rtl"] select {
+      background-position: left 12px center;
+      padding-right: 14px; padding-left: 32px;
+    }
+    [dir="rtl"] .section { direction: rtl; }
+    [dir="rtl"] .opportunity-grid { direction: rtl; }
+    [dir="rtl"] .opp-card { text-align: right; }
+    [dir="rtl"] .yinvesti-strip { direction: rtl; flex-direction: row-reverse; }
+    [dir="rtl"] .yinvesti-logos { flex-direction: row-reverse; }
+    [dir="rtl"] .cta-strip { direction: rtl; flex-direction: row-reverse; }
+    [dir="rtl"] footer { direction: rtl; flex-direction: row-reverse; }
+    [dir="rtl"] .footer-left { flex-direction: row-reverse; }
+    [dir="rtl"] .form-card { text-align: right; }
+    [dir="rtl"] .hero h1 { letter-spacing: 0; }
+    [dir="rtl"] .nav-cta { margin-left: 0; }
+    [dir="rtl"] .lang-switcher { margin-right: 0; margin-left: 16px; }
+    [dir="rtl"] .form-note { text-align: center; }
+
+    /* ── RESPONSIVE ──────────────────────── */
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 52px;
+        padding-top: 100px;
+      }
+      .hero::after { display: none; }
+      .opportunity-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .form-card { padding: 28px 22px; }
+      .form-row { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.1rem; }
+      .hero-stats { gap: 24px; }
+      nav { padding: 14px 5%; }
+      .nav-cta { display: none; }
+      .cta-strip { text-align: center; flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────── -->
+<nav>
+  <div class="nav-logo">
+    <!-- Krilli logo inline SVG (extracted from Logo_Krilli.svg, viewBox cropped to content) -->
+    <svg height="28" viewBox="386 371 420 100" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#E73B1E" d="M480,470h-6.7c-0.2,0-0.4,0.1-0.6,0.2c0,0,0,0-0.1,0c-6.7,0-13.4,0.3-20-0.1c-0.4,0-0.8-0.1-1.2-0.1
+        c0,0-0.1,0-0.1,0h-2.7c-0.4,0-0.8-0.2-1.1-0.5L447,469l-30.6-40.3c0,0,0,0,0,0c-2.3-6.2-0.8-11.5,4.4-17.8
+        c8.9-10.7,17.7-21.5,26.5-32.3c0.4-0.5,0.7-1.2,1.2-2.1c0.4-0.9-0.2-1.9-1.2-2c0,0,0,0,0,0c-1.1-0.1-1.7-1.3-1-2.2l0.4-0.6
+        l0.2-0.2h29.9c1.2,0,1.8,1.3,1.1,2.2l-35.6,44.9c-0.4,0.5-0.4,1.2,0,1.7l38.9,47.3C481.8,468.6,481.1,470,480,470z"/>
+      <path fill="#1a1a1a" d="M544.7,430.3c7.6-1.5,13.3-4.6,17.1-9.5c3.9-4.8,5.9-11,5.9-18.6c0-5.1-1-9.7-3-13.7c-1.9-4.2-4.8-7.7-8.5-10.4
+        c-3.4-2.4-7.3-4.1-11.7-5.1c-2.5-0.5-5.8-0.9-9.7-1.1c-3.9-0.2-8.7-0.3-14.4-0.3h-29.4V470h26.4v-38.5L541,470h31.8L544.7,430.3
+        z M535.9,415.2c-2.7,1.9-7.2,2.9-13.3,2.9h-5.2v-25.9h5.6c6.2,0,10.5,1.1,13.2,3.2c2.6,2.1,3.9,5.6,3.9,10.5
+        C540,410,538.6,413.1,535.9,415.2z"/>
+      <path fill="#1a1a1a" d="M581.4,371.6V470h28.4v-98.4H581.4z"/>
+      <path fill="#1a1a1a" d="M652.4,447v-75.4h-28.1V470h63.1v-23H652.4z"/>
+      <path fill="#1a1a1a" d="M729.2,447v-75.4h-28.1V470h63.1v-23H729.2z"/>
+      <path fill="#1a1a1a" d="M775.8,371.6V470h28.4v-98.4H775.8z"/>
+      <path fill="#1a1a1a" d="M414.2,465.3v3.6c0,0.6-0.5,1.1-1.1,1.1h-25.7c-0.6,0-1.1-0.5-1.1-1.1v-3.3c0-0.3,0.1-0.5,0.3-0.7
+        c1.5-1.8,2-4.1,2.2-7.9c0.2-3.7,0-7.6,0.9-11.1c2-7.7,7.6-11.9,15.1-13.8c1.9-0.5,3.9-0.7,6.1-1c0.6-0.1,1.2,0.4,1.2,1
+        c0.1,1,0.1,1.7,0.1,2.5c0,7.9,0,15.8,0.1,23.7c0,1.9,0.4,3.8,1.1,5.6c0.1,0.4,0.3,0.7,0.5,1
+        C414.1,464.9,414.2,465.1,414.2,465.3z"/>
+      <path fill="#1a1a1a" d="M420.4,372.8c0.1,0.5-0.2,1-0.7,1.2c-2.6,1-4.4,2-5.5,3.3c-1.5,1.7-1.9,4-1.9,7.9c0,14.7-11.3,21.1-22.3,20.8
+        c-0.6,0-1.1-0.5-1.1-1.1c0-0.6-0.1-1.1-0.1-1.7c0-5.3,0.1-10.6,0-15.9c0-2.3-0.3-4.7-0.7-7c-0.2-1.4-0.7-2.6-1.5-3.5
+        c-0.2-0.2-0.3-0.5-0.3-0.7v-3.3c0-0.6,0.5-1.1,1.1-1.1h31.8C419.8,371.8,420.3,372.2,420.4,372.8
+        C420.4,372.8,420.4,372.8,420.4,372.8z"/>
+      <path fill="#1a1a1a" d="M410.4,418.9c0,5.6-4.5,10.1-10,10c-5.5-0.1-10.1-4.8-10-10.2c0.1-5.5,4.8-10,10.2-10
+        C406.2,408.7,410.4,413.1,410.4,418.9z"/>
+    </svg>
+    <span class="nav-badge" data-fr="Levée de Fonds" data-ar="حملة تمويل">Levée de Fonds</span>
+  </div>
+  <div style="display:flex;align-items:center;">
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" id="btn-ar" onclick="setLang('ar')">AR</button>
+    </div>
+    <a href="https://yinvesti.dz/fr" class="nav-cta" data-fr="Investir dans Krilli" data-ar="استثمر في كريلي">Investir dans Krilli</a>
+  </div>
+</nav>
+
+<!-- ── HERO (pitch + form) ──────────────── -->
+<section class="hero" id="formulaire">
+  <!-- LEFT: pitch -->
+  <div class="hero-left">
+    <div class="hero-eyebrow" data-fr="Opportunité d'investissement" data-ar="فرصة استثمارية">Opportunité d'investissement</div>
+    <h1 data-fr="Investissez dans<br /><em>l'avenir de la</em><br /><span class='underline-accent'>mobilité</span> en Algérie." data-ar="استثمر في<br /><em>مستقبل</em><br /><span class='underline-accent'>التنقل</span> في الجزائر.">Investissez dans<br /><em>l'avenir de la</em><br /><span class="underline-accent">mobilité</span> en Algérie.</h1>
+    <p class="hero-sub">
+      <span data-fr='Krilli est la <strong>première plateforme P2P de location de véhicules entre particuliers en Algérie</strong>, disponible sur iOS et Android. Un modèle scalable ancré dans un marché de 45 millions d&apos;habitants encore inexploité.' data-ar='كريلي هي <strong>أول منصة P2P لتأجير السيارات بين الأفراد في الجزائر</strong>، متاحة على iOS و Android. نموذج قابل للتوسع في سوق يضمّ 48 مليون نسمة لم يُستغلّ بعد.'>Krilli est la <strong>première plateforme P2P de location de véhicules entre particuliers en Algérie</strong>, disponible sur iOS et Android. Un modèle scalable ancré dans un marché de 45 millions d'habitants encore inexploité.</span>
+      <br /><br />
+      <span data-fr='Rejoignez la levée de fonds via <a href="https://yinvesti.dz/fr" target="_blank" rel="noopener">Yinvesti</a> et devenez actionnaire de cette aventure.' data-ar='انضم إلى حملة التمويل عبر <a href="https://yinvesti.dz/fr" target="_blank" rel="noopener">Yinvesti</a> وكن مساهماً في هذه المغامرة.'>Rejoignez la levée de fonds via <a href="https://yinvesti.dz/fr" target="_blank" rel="noopener">Yinvesti</a> et devenez actionnaire de cette aventure.</span>
+      <br /><br />
+      <span data-fr='Retrouvez toutes les informations sur Krilli : <a href="https://linktr.ee/krilliAlgerie?utm_source=linktree_profile_share&ltsid=e0672b3b-4e8f-4687-832c-5c29db6a802f" target="_blank" rel="noopener">liens utiles Krilli</a>' data-ar='لمزيد من المعلومات  : <a href="https://linktr.ee/krilliAlgerie?utm_source=linktree_profile_share&ltsid=e0672b3b-4e8f-4687-832c-5c29db6a802f" target="_blank" rel="noopener">  اضغط على الرابط  </a>'>Retrouvez toutes les informations sur Krilli : <a href="https://linktr.ee/krilliAlgerie?utm_source=linktree_profile_share&ltsid=e0672b3b-4e8f-4687-832c-5c29db6a802f" target="_blank" rel="noopener">liens utiles Krilli</a></span>
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">+60<span></span></div>
+        <div class="stat-label" data-fr="Véhicules référencés" data-ar="سيارة مسجّلة">Véhicules référencés</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">+1000<span></span></div>
+        <div class="stat-label" data-fr="Téléchargements iOS & Android" data-ar="تحميل على iOS و Android">Téléchargements iOS & Android</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">1<span>ère</span></div>
+        <div class="stat-label" data-fr="Plateforme P2P auto en Algérie" data-ar="منصة P2P للسيارات في الجزائر">Plateforme P2P auto en Algérie</div>
+      </div>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-badge">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-fr="Processus sécurisé" data-ar="عملية آمنة">Processus sécurisé</span>
+      </div>
+      <span class="trust-sep">·</span>
+      <div class="trust-badge">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-fr="100% confidentiel" data-ar="100% سري">100% confidentiel</span>
+      </div>
+      <span class="trust-sep">·</span>
+      <div class="trust-badge">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-fr="Réponse sous 48h" data-ar="رد خلال 48 ساعة">Réponse sous 48h</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: form -->
+  <div class="hero-right">
+    <div class="form-card">
+      <div class="form-card-label" data-fr="Candidature investisseur" data-ar="طلب مستثمر">Candidature investisseur</div>
+      <div class="form-card-title" data-fr="Rejoindre la levée de fonds Krilli" data-ar="انضم إلى حملة تمويل كريلي">Rejoindre la levée de fonds Krilli</div>
+      <div class="form-card-sub" data-fr="Toutes les informations sont traitées de façon strictement confidentielle." data-ar="تُعالَج جميع المعلومات بسرية تامة.">Toutes les informations sont traitées de façon strictement confidentielle.</div>
+
+      <div id="form-content">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="prenom" data-fr="Prénom" data-ar="الاسم ">Prénom</label>
+            <input type="text" id="prenom" data-placeholder-fr="Votre prénom" data-placeholder-ar="اسمك" placeholder="Votre prénom" />
+          </div>
+          <div class="form-group">
+            <label for="nom" data-fr="Nom" data-ar="اللقب">Nom</label>
+            <input type="text" id="nom" data-placeholder-fr="Votre nom" data-placeholder-ar="لقبك" placeholder="Votre nom" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" data-fr="Adresse e-mail" data-ar="البريد الإلكتروني">Adresse e-mail</label>
+          <input type="email" id="email" data-placeholder-fr="votre@email.com" data-placeholder-ar="بريدك@الإلكتروني.com" placeholder="votre@email.com" />
+        </div>
+        <div class="form-group">
+          <label for="phone" data-fr="Numéro de téléphone" data-ar="رقم الهاتف">Numéro de téléphone</label>
+          <input type="tel" id="phone" data-placeholder-fr="+213 XX XX XX XX" data-placeholder-ar="+213 XX XX XX XX" placeholder="+213 XX XX XX XX" />
+        </div>
+        <div class="form-group">
+          <label for="ville" data-fr="Ville / Pays" data-ar="المدينة / الدولة">Ville / Pays</label>
+          <input type="text" id="ville" data-placeholder-fr="Alger, Algérie" data-placeholder-ar="الجزائر العاصمة، الجزائر" placeholder="Alger, Algérie" />
+        </div>
+        <div class="form-divider"></div>
+        <div class="form-group">
+          <label for="profil" data-fr="Profil investisseur" data-ar="ملف المستثمر">Profil investisseur</label>
+          <select id="profil">
+            <option value="" disabled selected data-fr="Sélectionnez votre profil" data-ar="اختر ملفك الشخصي">Sélectionnez votre profil</option>
+            <option data-fr="Investisseur individuel" data-ar="مستثمر فردي">Investisseur individuel</option>
+            <option data-fr="Business Angel" data-ar="مستثمر ملاك">Business Angel</option>
+            <option data-fr="Fonds d'investissement / VC" data-ar="صندوق استثمار / رأس مال مخاطر">Fonds d'investissement / VC</option>
+            <option data-fr="Investisseur institutionnel" data-ar="مستثمر مؤسسي">Investisseur institutionnel</option>
+            <option data-fr="Diaspora algérienne" data-ar="الجالية الجزائرية في الخارج">Diaspora algérienne</option>
+            <option data-fr="Autre" data-ar="أخرى">Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+  <label for="montantInvestissement"
+         data-fr="Capacité d'investissement"
+         data-ar="القدرة الاستثمارية">
+    Capacité d'investissement
+  </label>
+
+  <select id="montantInvestissement">
+    <option value="" disabled selected
+            data-fr="Sélectionnez une tranche"
+            data-ar="اختر الفئة">
+      Sélectionnez une tranche
+    </option>
+
+    <option data-fr="5 000 DZD - 50 000 DZD"
+            data-ar="5,000 دج - 50,000 دج">
+      5 000 DZD - 50 000 DZD
+    </option>
+
+    <option data-fr="50 000 DZD - 200 000 DZD"
+            data-ar="50,000 دج - 200,000 دج">
+      50 000 DZD - 200 000 DZD
+    </option>
+
+    <option data-fr="200 000 DZD - 1 Million DZD"
+            data-ar="200,000 دج - 1 مليون دج">
+      200 000 DZD - 1 Million DZD
+    </option>
+
+    <option data-fr="1 Million DZD - 5 Millions DZD"
+            data-ar="1 مليون دج - 5 ملايين دج">
+      1 Million DZD - 5 Millions DZD
+    </option>
+
+    <option data-fr="5 Millions DZD - 20 Millions DZD"
+            data-ar="5 ملايين دج - 20 مليون دج">
+      5 Millions DZD - 20 Millions DZD
+    </option>
+
+  </select>
+</div>
+        <div class="form-group">
+          <label for="message" data-fr="Questions ou commentaires (optionnel)" data-ar="أسئلة أو تعليقات (اختياري)">Questions ou commentaires (optionnel)</label>
+          <textarea id="message" data-placeholder-fr="Vos questions sur l'opportunité, votre expérience..." data-placeholder-ar="أسئلتك حول الفرصة، تجربتك..." placeholder="Vos questions sur l'opportunité, votre expérience..."></textarea>
+        </div>
+        <button class="submit-btn" onclick="handleSubmit()" data-fr="Soumettre ma candidature" data-ar="إرسال طلبي">
+          Soumettre ma candidature
+        </button>
+        <p class="form-note" data-fr="En soumettant ce formulaire, vous acceptez d'être recontacté par l'équipe Krilli. Aucune donnée n'est partagée avec des tiers." data-ar="بإرسال هذا النموذج، توافق على إعادة الاتصال بك من قِبل فريق كريلي. لا تُشارَك أي بيانات مع أطراف ثالثة.">En soumettant ce formulaire, vous acceptez d'être recontacté par l'équipe Krilli. Aucune donnée n'est partagée avec des tiers.</p>
+      </div>
+
+      <div class="success-msg" id="success-msg">
+        <div class="success-icon">
+          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#E73B1E" stroke-width="2.5">
+            <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 data-fr="Candidature reçue !" data-ar="تم استلام طلبك!">Candidature reçue !</h3>
+        <p data-fr="Merci pour votre intérêt. L'équipe Krilli vous contactera dans les 48 heures pour la suite du processus." data-ar="شكراً على اهتمامك. سيتواصل معك فريق كريلي خلال 48 ساعة لمتابعة الإجراءات.">Merci pour votre intérêt. L'équipe Krilli vous contactera dans les 48 heures pour la suite du processus.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── YINVESTI STRIP ────────────────────── -->
+<div class="yinvesti-strip reveal">
+  <div class="yinvesti-logos">
+    <!-- Krilli logo for strip -->
+    <svg height="24" viewBox="386 371 420 100" xmlns="http://www.w3.org/2000/svg">
+      <path fill="#E73B1E" d="M480,470h-6.7c-0.2,0-0.4,0.1-0.6,0.2c0,0,0,0-0.1,0c-6.7,0-13.4,0.3-20-0.1c-0.4,0-0.8-0.1-1.2-0.1
+        c0,0-0.1,0-0.1,0h-2.7c-0.4,0-0.8-0.2-1.1-0.5L447,469l-30.6-40.3c0,0,0,0,0,0c-2.3-6.2-0.8-11.5,4.4-17.8
+        c8.9-10.7,17.7-21.5,26.5-32.3c0.4-0.5,0.7-1.2,1.2-2.1c0.4-0.9-0.2-1.9-1.2-2c0,0,0,0,0,0c-1.1-0.1-1.7-1.3-1-2.2l0.4-0.6
+        l0.2-0.2h29.9c1.2,0,1.8,1.3,1.1,2.2l-35.6,44.9c-0.4,0.5-0.4,1.2,0,1.7l38.9,47.3C481.8,468.6,481.1,470,480,470z"/>
+      <path fill="#1a1a1a" d="M544.7,430.3c7.6-1.5,13.3-4.6,17.1-9.5c3.9-4.8,5.9-11,5.9-18.6c0-5.1-1-9.7-3-13.7c-1.9-4.2-4.8-7.7-8.5-10.4
+        c-3.4-2.4-7.3-4.1-11.7-5.1c-2.5-0.5-5.8-0.9-9.7-1.1c-3.9-0.2-8.7-0.3-14.4-0.3h-29.4V470h26.4v-38.5L541,470h31.8L544.7,430.3
+        z M535.9,415.2c-2.7,1.9-7.2,2.9-13.3,2.9h-5.2v-25.9h5.6c6.2,0,10.5,1.1,13.2,3.2c2.6,2.1,3.9,5.6,3.9,10.5
+        C540,410,538.6,413.1,535.9,415.2z"/>
+      <path fill="#1a1a1a" d="M581.4,371.6V470h28.4v-98.4H581.4z"/>
+      <path fill="#1a1a1a" d="M652.4,447v-75.4h-28.1V470h63.1v-23H652.4z"/>
+      <path fill="#1a1a1a" d="M729.2,447v-75.4h-28.1V470h63.1v-23H729.2z"/>
+      <path fill="#1a1a1a" d="M775.8,371.6V470h28.4v-98.4H775.8z"/>
+      <path fill="#1a1a1a" d="M414.2,465.3v3.6c0,0.6-0.5,1.1-1.1,1.1h-25.7c-0.6,0-1.1-0.5-1.1-1.1v-3.3c0-0.3,0.1-0.5,0.3-0.7
+        c1.5-1.8,2-4.1,2.2-7.9c0.2-3.7,0-7.6,0.9-11.1c2-7.7,7.6-11.9,15.1-13.8c1.9-0.5,3.9-0.7,6.1-1c0.6-0.1,1.2,0.4,1.2,1
+        c0.1,1,0.1,1.7,0.1,2.5c0,7.9,0,15.8,0.1,23.7c0,1.9,0.4,3.8,1.1,5.6c0.1,0.4,0.3,0.7,0.5,1C414.1,464.9,414.2,465.1,414.2,465.3z"/>
+      <path fill="#1a1a1a" d="M420.4,372.8c0.1,0.5-0.2,1-0.7,1.2c-2.6,1-4.4,2-5.5,3.3c-1.5,1.7-1.9,4-1.9,7.9c0,14.7-11.3,21.1-22.3,20.8
+        c-0.6,0-1.1-0.5-1.1-1.1c0-0.6-0.1-1.1-0.1-1.7c0-5.3,0.1-10.6,0-15.9c0-2.3-0.3-4.7-0.7-7c-0.2-1.4-0.7-2.6-1.5-3.5
+        c-0.2-0.2-0.3-0.5-0.3-0.7v-3.3c0-0.6,0.5-1.1,1.1-1.1h31.8C419.8,371.8,420.3,372.2,420.4,372.8C420.4,372.8,420.4,372.8,420.4,372.8z"/>
+      <path fill="#1a1a1a" d="M410.4,418.9c0,5.6-4.5,10.1-10,10c-5.5-0.1-10.1-4.8-10-10.2c0.1-5.5,4.8-10,10.2-10C406.2,408.7,410.4,413.1,410.4,418.9z"/>
+    </svg>
+    <span class="yinvesti-sep">×</span>
+    <!-- Yinvesti official SVG logo -->
+    <svg class="yinvesti-logo-svg" viewBox="0 0 142 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15.3509 3.60275C15.3509 5.59285 17.179 7.20582 19.4351 7.20582C19.5213 7.20582 19.6066 7.20381 19.6907 7.19825C19.7769 7.19446 19.8623 7.18704 19.9463 7.17769C17.9308 6.9558 16.3734 5.43963 16.3734 3.60275C16.3734 1.76619 17.9308 0.250022 19.9463 0.0281294C19.8623 0.0186992 19.7769 0.0112067 19.6907 0.00741853C19.6066 0.00169591 19.5213 0 19.4351 0C17.179 0 15.3509 1.61297 15.3509 3.60275Z" fill="url(#p0)"/>
+      <path d="M6.07679 0.00012207C5.90698 0.00012207 5.74056 0.00721639 5.57559 0.01979L5.56444 0.00012207C1.42259 0.00012207 -1.26451 3.8549 0.605691 7.11623L2.82172 10.9808C5.0456 14.8638 6.20696 19.1537 6.20696 23.5054V28.9027C6.37823 28.9027 6.54795 28.8984 6.71776 28.8872C6.88922 28.8789 7.06031 28.8649 7.22848 28.8453V23.5054C7.22848 19.1537 6.06885 14.8638 3.84323 10.9808L1.6272 7.11623C-0.0874358 4.12089 2.03807 0.623085 5.60719 0.0742778C5.76431 0.0505814 5.92461 0.0322831 6.08803 0.01979L6.07679 0.00012207Z" fill="url(#p1)"/>
+      <path d="M6.58727 0C6.41774 0 6.25121 0.00709432 6.0878 0.019668C5.92438 0.032161 5.76408 0.0504593 5.60696 0.0741558C2.03784 0.622963 -0.0876677 4.12076 1.62697 7.11611L3.843 10.9807C6.06862 14.8636 7.22825 19.1536 7.22825 23.5053V28.9026C9.45213 28.9026 11.4653 28.1075 12.9214 26.8226C14.3795 25.5362 15.2803 23.76 15.2803 21.7976C15.2803 17.4543 14.1238 13.1699 11.9046 9.29119L6.58727 0Z" fill="url(#p2)"/>
+      <path d="M18.8502 0.0281572C16.8347 0.25005 15.2772 1.76622 15.2772 3.60278C15.2772 5.43966 16.8347 6.95583 18.8502 7.17772C18.9345 7.18707 19.0195 7.19449 19.1058 7.19827C21.2418 7.08261 22.9335 5.51663 22.9335 3.60278C22.9335 1.68908 21.2418 0.123108 19.1058 0.00744629C19.0195 0.0112345 18.9345 0.0187269 18.8502 0.0281572Z" fill="url(#p3)"/>
+      <path d="M17.3499 26.1887V11.798C17.3499 11.1222 17.622 10.5374 18.1677 10.0431C18.7124 9.54947 19.383 9.30219 20.1787 9.30219C20.9446 9.30219 21.5999 9.54947 22.1456 10.0431C22.6904 10.5374 22.9632 11.1222 22.9632 11.798V26.1887C22.9632 26.8651 22.6827 27.45 22.1233 27.9436C21.5633 28.4375 20.9002 28.6847 20.1346 28.6847C19.3678 28.6847 18.7124 28.4375 18.1677 27.9436C17.622 27.45 17.3499 26.8651 17.3499 26.1887Z" fill="#16479D"/>
+      <path d="M135.856 26.1887V11.798C135.856 11.1222 136.128 10.5373 136.674 10.043C137.219 9.54941 137.889 9.30213 138.685 9.30213C139.451 9.30213 140.106 9.54941 140.652 10.043C141.197 10.5373 141.47 11.1222 141.47 11.798V26.1887C141.47 26.8651 141.189 27.45 140.63 27.9436C140.07 28.4374 139.407 28.6846 138.641 28.6846C137.874 28.6846 137.219 28.4374 136.674 27.9436C136.128 27.45 135.856 26.8651 135.856 26.1887ZM136.276 5.61644C135.613 5.0316 135.282 4.33618 135.282 3.53018C135.282 2.72458 135.613 2.02867 136.276 1.44344C136.939 0.8586 137.727 0.566101 138.641 0.566101C139.583 0.566101 140.379 0.852719 141.028 1.42401C141.675 1.99636 142 2.69846 142 3.53018C142 4.33618 141.675 5.0316 141.028 5.61644C140.379 6.20151 139.583 6.49401 138.641 6.49401C137.727 6.49401 136.939 6.20151 136.276 5.61644Z" fill="#16479D"/>
+      <path d="M46.6305 15.1125V26.1883C46.6305 26.8646 46.3578 27.4495 45.8127 27.9432C45.2671 28.4369 44.5974 28.6843 43.8017 28.6843C43.0351 28.6843 42.3798 28.4369 41.8348 27.9432C41.2893 27.4495 41.0172 26.8646 41.0172 26.1883V17.0234C41.0172 14.6834 39.7058 13.5134 37.0836 13.5134C35.1092 13.5134 33.4883 14.2546 32.2217 15.7365V26.1883C32.2217 26.8646 31.9489 27.4495 31.4041 27.9432C30.8584 28.4369 30.2031 28.6843 29.4374 28.6843C28.6417 28.6843 27.9711 28.4369 27.4264 27.9432C26.8807 27.4495 26.6084 26.8646 26.6084 26.1883V11.7977C26.6084 11.0955 26.8807 10.4978 27.4264 10.0035C27.9711 9.50998 28.6265 9.26261 29.3931 9.26261C30.1885 9.26261 30.8661 9.50998 31.4262 10.0035C31.9856 10.4978 32.266 11.0955 32.266 11.7977V11.9535C34.2106 10.056 36.6858 9.10657 39.6913 9.10657C41.9599 9.10657 43.6836 9.63305 44.8624 10.6859C46.0406 11.739 46.6305 13.2151 46.6305 15.1125Z" fill="#16479D"/>
+      <path d="M71.2045 11.7587C71.2045 12.045 71.1306 12.357 70.9834 12.6947L64.7075 26.3445C64.3828 27.0463 63.86 27.612 63.1382 28.0408C62.416 28.4698 61.628 28.6842 60.7738 28.6842C59.8897 28.6842 59.0867 28.4698 58.365 28.0408C57.6425 27.612 57.1198 27.0463 56.7959 26.3445L50.5198 12.6557C50.3719 12.318 50.2986 12.0189 50.2986 11.7587C50.2986 11.0829 50.5639 10.5045 51.0944 10.0232C51.6248 9.54242 52.2724 9.30182 53.039 9.30182C54.3056 9.30182 55.1606 9.80879 55.6024 10.8227L60.7295 22.7955L65.8123 10.8227C66.2543 9.80879 67.123 9.30182 68.42 9.30182C69.2155 9.30182 69.8785 9.54242 70.409 10.0232C70.9394 10.5045 71.2045 11.0829 71.2045 11.7587Z" fill="#16479D"/>
+      <path d="M79.2935 17.2188H89.8127C89.7242 16.0488 89.2228 15.061 88.3099 14.2551C87.3962 13.4494 86.1443 13.0462 84.5531 13.0462C83.0504 13.0462 81.8418 13.4494 80.9288 14.2551C80.0151 15.061 79.4703 16.0488 79.2935 17.2188ZM84.5531 9.10699C87.6173 9.10699 90.1664 9.99812 92.1994 11.7787C94.2324 13.5597 95.2492 15.7115 95.2492 18.2329C95.2492 19.7928 94.1442 20.5729 91.9342 20.5729H79.3818C79.5586 21.8471 80.1995 22.8932 81.3044 23.7125C82.4094 24.5312 83.8163 24.9408 85.5255 24.9408C86.9984 24.9408 88.4426 24.5898 89.857 23.8877C90.1511 23.7319 90.5046 23.6539 90.9177 23.6539C91.5067 23.6539 92.0227 23.8488 92.4645 24.2388C92.9066 24.6289 93.1276 25.0841 93.1276 25.6038C93.1276 26.3583 92.7299 26.9299 91.9342 27.3197C89.8713 28.3598 87.5289 28.8798 84.9066 28.8798C81.6062 28.8798 78.8805 27.9632 76.73 26.1302C74.5788 24.2973 73.5035 21.9123 73.5035 18.974C73.5035 16.2184 74.5492 13.8846 76.6416 11.9735C78.7333 10.0626 81.3708 9.10699 84.5531 9.10699Z" fill="#16479D"/>
+      <path d="M97.9453 25.2531C97.9453 24.6815 98.1732 24.1941 98.6304 23.7907C99.0868 23.3879 99.6393 23.1863 100.288 23.1863C100.7 23.1863 101.098 23.2776 101.481 23.4593C103.426 24.5257 105.355 25.0581 107.271 25.0581C109.658 25.0581 110.851 24.4213 110.851 23.1472C110.851 22.5756 110.52 22.127 109.857 21.8017C109.194 21.4769 108.096 21.1843 106.564 20.9243C104.825 20.6646 103.411 20.3527 102.321 19.9882C99.551 19.1827 98.1664 17.5311 98.1664 15.0352C98.1664 13.3717 98.9619 11.9675 100.553 10.8234C102.144 9.6797 104.266 9.10736 106.918 9.10736C109.54 9.10736 111.882 9.66689 113.945 10.7843C114.681 11.1225 115.05 11.6684 115.05 12.4223C115.05 12.9426 114.836 13.3912 114.409 13.7678C113.982 14.1449 113.473 14.3333 112.884 14.3333C112.442 14.3333 112.089 14.2552 111.824 14.0991C110.35 13.2937 108.73 12.8903 106.962 12.8903C105.93 12.8903 105.112 13.0463 104.509 13.3584C103.904 13.6704 103.603 14.0991 103.603 14.6454C103.603 15.1655 103.904 15.5685 104.509 15.8543C105.112 16.1405 106.166 16.4135 107.669 16.6732C109.172 16.9071 110.601 17.2326 111.956 17.6483C114.814 18.5587 116.243 20.2874 116.243 22.8353C116.243 24.6034 115.418 26.0525 113.768 27.1836C112.118 28.3144 109.864 28.8801 107.006 28.8801C104.029 28.8801 101.407 28.2696 99.1386 27.047C98.3431 26.6573 97.9453 26.0594 97.9453 25.2531Z" fill="#16479D"/>
+      <path d="M132.155 26.5393C132.155 27.5277 131.594 28.1773 130.475 28.4893C129.68 28.749 128.707 28.8795 127.558 28.8795C125.584 28.8795 124.081 28.4371 123.05 27.5534C122.018 26.6698 121.503 25.3957 121.503 23.7314V13.9035H120.133C119.455 13.9035 118.873 13.6957 118.387 13.2796C117.901 12.8639 117.658 12.357 117.658 11.7586C117.658 11.1609 117.901 10.6471 118.387 10.2182C118.873 9.78905 119.455 9.57466 120.133 9.57466H121.503V6.64967C121.503 5.97376 121.783 5.38884 122.343 4.89452C122.902 4.401 123.58 4.15381 124.376 4.15381C125.142 4.15381 125.797 4.401 126.343 4.89452C126.887 5.38884 127.16 5.97376 127.16 6.64967V9.57466H129.37C130.048 9.57466 130.622 9.78905 131.094 10.2182C131.565 10.6471 131.801 11.1609 131.801 11.7586C131.801 12.3307 131.565 12.8309 131.094 13.26C130.622 13.6891 130.048 13.9035 129.37 13.9035H127.16V22.4055C127.16 23.0293 127.329 23.5303 127.669 23.9068C128.007 24.284 128.471 24.4722 129.061 24.4722C129.208 24.4722 129.385 24.4596 129.591 24.4335C129.797 24.4078 129.929 24.3945 129.989 24.3945C130.637 24.4207 131.16 24.635 131.558 25.038C131.956 25.4412 132.155 25.9416 132.155 26.5393Z" fill="#16479D"/>
+      <defs>
+        <linearGradient id="p0" x1="15.3509" y1="3.60275" x2="19.9465" y2="3.60275" gradientUnits="userSpaceOnUse"><stop stop-color="#00CC66"/><stop offset="1" stop-color="#0040A7"/></linearGradient>
+        <linearGradient id="p1" x1="-0.00038248" y1="14.4509" x2="7.22812" y2="14.4509" gradientUnits="userSpaceOnUse"><stop stop-color="#00CC66"/><stop offset="1" stop-color="#16479D"/></linearGradient>
+        <linearGradient id="p2" x1="1.02254" y1="14.4508" x2="15.28" y2="14.4508" gradientUnits="userSpaceOnUse"><stop stop-color="#00CC66"/><stop offset="1" stop-color="#16479D"/></linearGradient>
+        <linearGradient id="p3" x1="15.2777" y1="3.60278" x2="22.9339" y2="3.60278" gradientUnits="userSpaceOnUse"><stop stop-color="#00CC66"/><stop offset="1" stop-color="#0040A7"/></linearGradient>
+      </defs>
+    </svg>
+  </div>
+  <div>
+    <div class="yinvesti-label" data-fr="Campagne officielle de levée de fonds" data-ar="حملة جمع التمويل الرسمية">Campagne officielle de levée de fonds</div>
+    <div class="yinvesti-desc" data-fr="La levée de fonds Krilli est structurée et sécurisée via Yinvesti, plateforme de référence de l'equity crowdfunding en Algérie. Un cadre légal, transparent, adapté aux investisseurs particuliers comme institutionnels." data-ar="حملة تمويل كريلي منظّمة وآمنة عبر Yinvesti، المنصة المرجعية للتمويل الجماعي بالمساهمة في الجزائر. إطار قانوني شفاف، يناسب المستثمرين الأفراد والمؤسسيين على حدٍّ سواء.">La levée de fonds Krilli est structurée et sécurisée via Yinvesti, plateforme de référence de l'equity crowdfunding en Algérie. Un cadre légal, transparent, adapté aux investisseurs particuliers comme institutionnels.</div>
+  </div>
+</div>
+
+<!-- ── OPPORTUNITY ──────────────────────── -->
+<section class="section" id="opportunite">
+  <div class="reveal">
+    <div class="section-tag" data-fr="Comment fonctionne l'investissement" data-ar="كيف يعمل الاستثمار">Comment fonctionne l'investissement</div>
+    <div class="section-title" data-fr="Vous devenez actionnaire<br />de Krilli." data-ar="تصبح مساهماً<br />في كريلي.">Vous devenez actionnaire<br />de Krilli.</div>
+    <div class="section-sub" data-fr="Investir dans Krilli via Yinvesti, ce n'est pas un don ni une prévente. C'est une entrée au capital d'une startup opérationnelle, avec des droits réels et un potentiel de rendement concret." data-ar="الاستثمار في كريلي عبر Yinvesti ليس تبرعاً ولا شراءً مسبقاً. إنه دخول في رأس مال شركة ناشئة تعمل فعلياً، بحقوق حقيقية وإمكانية عائد ملموسة.">Investir dans Krilli via Yinvesti, ce n'est pas un don ni une prévente. C'est une entrée au capital d'une startup opérationnelle, avec des droits réels et un potentiel de rendement concret.</div>
+  </div>
+  <div class="opportunity-grid reveal">
+    <div class="opp-card">
+      <div class="opp-icon">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 data-fr="Une part réelle dans l'entreprise" data-ar="حصة حقيقية في الشركة">Une part réelle dans l'entreprise</h3>
+      <p data-fr="En investissant, vous devenez copropriétaire enregistré de Krilli. Vous recevez une fiche de participation dès la souscription, puis votre entrée est officialisée dans le registre des actionnaires à la clôture de la campagne, avec validation juridique complète." data-ar="بالاستثمار، تصبح مالكاً مشتركاً مسجّلاً في كريلي. تتلقى وثيقة مشاركة فور الاشتراك، ثم يُرسَّم دخولك في سجل المساهمين عند إغلاق الحملة، مع مصادقة قانونية كاملة.">En investissant, vous devenez copropriétaire enregistré de Krilli. Vous recevez une fiche de participation dès la souscription, puis votre entrée est officialisée dans le registre des actionnaires à la clôture de la campagne, avec validation juridique complète.</p>
+    </div>
+    <div class="opp-card">
+      <div class="opp-icon">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round"/></svg>
+      </div>
+      <h3 data-fr="Deux leviers de rendement" data-ar="مصدران للعائد الاستثماري">Deux leviers de rendement</h3>
+      <p data-fr="Votre retour sur investissement peut se réaliser de deux façons : par des dividendes si Krilli dégage des bénéfices et que l'assemblée générale vote leur distribution, ou par une plus-value en cas de revente de vos parts à une valorisation supérieure à votre prix d'entrée." data-ar="يمكن تحقيق عائد استثمارك بطريقتين: عبر توزيعات الأرباح إذا حققت كريلي أرباحاً وصوّتت الجمعية العامة على توزيعها، أو عبر فائض القيمة عند إعادة بيع حصصك بتقييم أعلى من سعر الدخول.">Votre retour sur investissement peut se réaliser de deux façons : par des dividendes si Krilli dégage des bénéfices et que l'assemblée générale vote leur distribution, ou par une plus-value en cas de revente de vos parts à une valorisation supérieure à votre prix d'entrée.</p>
+    </div>
+    <div class="opp-card">
+      <div class="opp-icon">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 data-fr="Sortie encadrée et sécurisée" data-ar="خروج منظّم وآمن">Sortie encadrée et sécurisée</h3>
+      <p data-fr="La revente de vos actions suit un processus structuré : priorité d'abord aux autres actionnaires ou à la société selon les statuts, puis possibilité de cession à un tiers. La liquidité dépend du marché des acquéreurs, pas de la plateforme." data-ar="يتبع إعادة بيع أسهمك عملية منظمة: الأولوية للمساهمين الآخرين أو للشركة وفق النظام الأساسي، ثم إمكانية التنازل لطرف ثالث. تعتمد السيولة على سوق المشترين، لا على المنصة.">La revente de vos actions suit un processus structuré : priorité d'abord aux autres actionnaires ou à la société selon les statuts, puis possibilité de cession à un tiers. La liquidité dépend du marché des acquéreurs, pas de la plateforme.</p>
+    </div>
+    <div class="opp-card">
+      <div class="opp-icon">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3 data-fr="Transparence et suivi actionnaire" data-ar="الشفافية ومتابعة المساهمين">Transparence et suivi actionnaire</h3>
+      <p data-fr="En tant qu'actionnaire, vous avez droit aux rapports financiers, aux assemblées générales et aux communications officielles de Krilli. Les projections de ROI sont des estimations basées sur le business plan, pas des garanties." data-ar="بصفتك مساهماً، يحق لك الاطلاع على التقارير المالية والجمعيات العامة والمراسلات الرسمية لكريلي. توقعات العائد على الاستثمار تقديرات مبنية على خطة العمل، وليست ضمانات.">En tant qu'actionnaire, vous avez droit aux rapports financiers, aux assemblées générales et aux communications officielles de Krilli. Les projections de ROI sont des estimations basées sur le business plan, pas des garanties.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── BOTTOM CTA STRIP ──────────────────── -->
+<div class="cta-strip reveal">
+  <div class="cta-strip-left">
+    <div class="cta-strip-title">Prêt à rejoindre<br />l'aventure <em>Krilli</em> ?</div>
+    <div class="cta-strip-sub">Soumettez votre candidature investisseur. Notre équipe vous recontacte sous 48h avec le dossier complet.</div>
+  </div>
+  <a href="#formulaire">Soumettre ma candidature</a>
+</div>
+
+<!-- ── FOOTER ─────────────────────────────── -->
+<footer>
+  <div class="footer-left">
+    <svg height="20" viewBox="386 371 420 100" xmlns="http://www.w3.org/2000/svg" style="opacity:0.45">
+      <path fill="#E73B1E" d="M480,470h-6.7c-0.2,0-0.4,0.1-0.6,0.2c0,0,0,0-0.1,0c-6.7,0-13.4,0.3-20-0.1c-0.4,0-0.8-0.1-1.2-0.1c0,0-0.1,0-0.1,0h-2.7c-0.4,0-0.8-0.2-1.1-0.5L447,469l-30.6-40.3c0,0,0,0,0,0c-2.3-6.2-0.8-11.5,4.4-17.8c8.9-10.7,17.7-21.5,26.5-32.3c0.4-0.5,0.7-1.2,1.2-2.1c0.4-0.9-0.2-1.9-1.2-2c0,0,0,0,0,0c-1.1-0.1-1.7-1.3-1-2.2l0.4-0.6l0.2-0.2h29.9c1.2,0,1.8,1.3,1.1,2.2l-35.6,44.9c-0.4,0.5-0.4,1.2,0,1.7l38.9,47.3C481.8,468.6,481.1,470,480,470z"/>
+      <path fill="#1a1a1a" d="M544.7,430.3c7.6-1.5,13.3-4.6,17.1-9.5c3.9-4.8,5.9-11,5.9-18.6c0-5.1-1-9.7-3-13.7c-1.9-4.2-4.8-7.7-8.5-10.4c-3.4-2.4-7.3-4.1-11.7-5.1c-2.5-0.5-5.8-0.9-9.7-1.1c-3.9-0.2-8.7-0.3-14.4-0.3h-29.4V470h26.4v-38.5L541,470h31.8L544.7,430.3z M535.9,415.2c-2.7,1.9-7.2,2.9-13.3,2.9h-5.2v-25.9h5.6c6.2,0,10.5,1.1,13.2,3.2c2.6,2.1,3.9,5.6,3.9,10.5C540,410,538.6,413.1,535.9,415.2z"/>
+      <path fill="#1a1a1a" d="M581.4,371.6V470h28.4v-98.4H581.4z"/>
+      <path fill="#1a1a1a" d="M652.4,447v-75.4h-28.1V470h63.1v-23H652.4z"/>
+      <path fill="#1a1a1a" d="M729.2,447v-75.4h-28.1V470h63.1v-23H729.2z"/>
+      <path fill="#1a1a1a" d="M775.8,371.6V470h28.4v-98.4H775.8z"/>
+      <path fill="#1a1a1a" d="M414.2,465.3v3.6c0,0.6-0.5,1.1-1.1,1.1h-25.7c-0.6,0-1.1-0.5-1.1-1.1v-3.3c0-0.3,0.1-0.5,0.3-0.7c1.5-1.8,2-4.1,2.2-7.9c0.2-3.7,0-7.6,0.9-11.1c2-7.7,7.6-11.9,15.1-13.8c1.9-0.5,3.9-0.7,6.1-1c0.6-0.1,1.2,0.4,1.2,1c0.1,1,0.1,1.7,0.1,2.5c0,7.9,0,15.8,0.1,23.7c0,1.9,0.4,3.8,1.1,5.6c0.1,0.4,0.3,0.7,0.5,1C414.1,464.9,414.2,465.1,414.2,465.3z"/>
+      <path fill="#1a1a1a" d="M420.4,372.8c0.1,0.5-0.2,1-0.7,1.2c-2.6,1-4.4,2-5.5,3.3c-1.5,1.7-1.9,4-1.9,7.9c0,14.7-11.3,21.1-22.3,20.8c-0.6,0-1.1-0.5-1.1-1.1c0-0.6-0.1-1.1-0.1-1.7c0-5.3,0.1-10.6,0-15.9c0-2.3-0.3-4.7-0.7-7c-0.2-1.4-0.7-2.6-1.5-3.5c-0.2-0.2-0.3-0.5-0.3-0.7v-3.3c0-0.6,0.5-1.1,1.1-1.1h31.8C419.8,371.8,420.3,372.2,420.4,372.8C420.4,372.8,420.4,372.8,420.4,372.8z"/>
+      <path fill="#1a1a1a" d="M410.4,418.9c0,5.6-4.5,10.1-10,10c-5.5-0.1-10.1-4.8-10-10.2c0.1-5.5,4.8-10,10.2-10C406.2,408.7,410.4,413.1,410.4,418.9z"/>
+    </svg>
+    <span class="footer-copy">© 2025 Krilli Algeria. Tous droits réservés.</span>
+  </div>
+  <div class="footer-right">Levée de fonds via <a href="https://yinvesti.dz/fr" target="_blank" rel="noopener">Yinvesti</a></div>
+</footer>
+
+<script>
+  // ── LANGUAGE SWITCHER ─────────────────────────────────────────────
+  let currentLang = 'fr';
+
+  const i18n = {
+    fr: {
+      validationRequired: 'Veuillez remplir au minimum votre prénom, e-mail et numéro de téléphone.',
+      validationEmail: 'Veuillez entrer une adresse e-mail valide.',
+      sending: 'Envoi en cours...',
+      submitDefault: 'Soumettre ma candidature',
+      errorMsg: 'Une erreur est survenue. Réessayez.',
+      ctaStripTitle: 'Prêt à rejoindre<br />l\'aventure <em>Krilli</em> ?',
+      ctaStripSub: 'Soumettez votre candidature investisseur. Notre équipe vous recontacte sous 48h avec le dossier complet.',
+      ctaStripBtn: 'Soumettre ma candidature',
+      footerCopy: '© 2025 Krilli Algeria. Tous droits réservés.',
+      footerRight: 'Levée de fonds via',
+    },
+    ar: {
+      validationRequired: 'يرجى ملء الاسم الأول والبريد الإلكتروني ورقم الهاتف على الأقل.',
+      validationEmail: 'يرجى إدخال عنوان بريد إلكتروني صحيح.',
+      sending: 'جارٍ الإرسال...',
+      submitDefault: 'إرسال طلبي',
+      errorMsg: 'حدث خطأ. يرجى المحاولة مرة أخرى.',
+      ctaStripTitle: 'مستعد للانضمام<br />إلى مغامرة <em>كريلي</em>؟',
+      ctaStripSub: 'أرسل طلبك كمستثمر. سيتواصل معك فريقنا خلال 48 ساعة مع الملف الكامل.',
+      ctaStripBtn: 'إرسال طلبي',
+      footerCopy: '© 2025 كريلي الجزائر. جميع الحقوق محفوظة.',
+      footerRight: 'جولة تمويل عبر',
+    }
+  };
+
+  function setLang(lang) {
+    currentLang = lang;
+    const isAr = lang === 'ar';
+
+    // Update html dir & lang
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+
+    // Update button states
+    document.getElementById('btn-fr').classList.toggle('active', !isAr);
+    document.getElementById('btn-ar').classList.toggle('active', isAr);
+
+    // Update all elements with data-fr / data-ar
+    document.querySelectorAll('[data-fr]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val !== null) {
+        // Use innerHTML to support <br>, <em>, <strong>, <a> in values
+        el.innerHTML = val;
+      }
+    });
+
+    // Update placeholders
+    document.querySelectorAll('[data-placeholder-fr]').forEach(el => {
+      const ph = el.getAttribute('data-placeholder-' + lang);
+      if (ph !== null) el.setAttribute('placeholder', ph);
+    });
+
+    // Update <option> text (select options)
+    document.querySelectorAll('option[data-fr]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val !== null) el.textContent = val;
+    });
+
+    // Static sections that don't use data attrs (CTA strip, footer)
+    const t = i18n[lang];
+
+    const ctaTitle = document.querySelector('.cta-strip-title');
+    if (ctaTitle) ctaTitle.innerHTML = t.ctaStripTitle;
+
+    const ctaSub = document.querySelector('.cta-strip-sub');
+    if (ctaSub) ctaSub.textContent = t.ctaStripSub;
+
+    const ctaBtn = document.querySelector('.cta-strip a');
+    if (ctaBtn) ctaBtn.textContent = t.ctaStripBtn;
+
+    const footerCopy = document.querySelector('.footer-copy');
+    if (footerCopy) footerCopy.textContent = t.footerCopy;
+
+    const footerRight = document.querySelector('.footer-right');
+    if (footerRight) footerRight.innerHTML = t.footerRight + ' <a href="https://yinvesti.dz/fr" target="_blank" rel="noopener">Yinvesti</a>';
+
+    // Update page title
+    document.title = isAr
+      ? 'كريلي × Yinvesti — جولة تمويل'
+      : 'Krilli × Yinvesti — Levée de Fonds';
+  }
+
+  // ── SCROLL REVEAL ────────────────────────────────────────────────
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── FORM SUBMISSION ──────────────────────────────────────────────
+  async function handleSubmit() {
+    const prenom = document.getElementById('prenom').value.trim();
+    const nom = document.getElementById('nom').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const ville = document.getElementById('ville').value.trim();
+    const profil = document.getElementById('profil').value;
+    const message = document.getElementById('message').value.trim();
+
+    const t = i18n[currentLang];
+
+    if (!prenom || !email || !phone) {
+      alert(t.validationRequired);
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      alert(t.validationEmail);
+      return;
+    }
+
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxDY4YD2HrtXgCLG10iWax1d0ucQM0Vemx9IHs8wS4mE1ovQoRKnQr27SPwbl44_PK8yQ/exec';
+
+    const btn = document.querySelector('.submit-btn');
+    btn.disabled = true;
+    btn.textContent = t.sending;
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prenom, nom, email, phone, ville, profil, message, lang: currentLang })
+      });
+      document.getElementById('form-content').style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } catch (err) {
+      alert(t.errorMsg);
+      btn.disabled = false;
+      btn.textContent = t.submitDefault;
+    }
+  }
+</script>
+</body>
+</html>
